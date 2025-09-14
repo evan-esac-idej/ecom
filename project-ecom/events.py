@@ -111,7 +111,13 @@ try:
     if op == '👥 Clientes':
         with col_a:
             for item in mob.items():
-                st.image(f'images/{item[0]}.jpg')
+                nome = item[0]
+                caminho_imagem = os.path.join('images', f'{nome}.jpg')  # caminho completo
+   
+                if os.path.exists(caminho_imagem):
+                st.image(caminho_imagem)
+                else:
+                    st.warning(f"Imagem não encontrada: {caminho_imagem}")
                 if f'{item[0]}' in 'JardimPiscinaDecorativos':
                     pr = st.number_input(f'Para adicionar **{item[0]}** Coloque o número 1', 0, 1, 0)
                 else:
@@ -290,6 +296,7 @@ if button:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(1.5)
     placeholder.empty()
+
 
 
 

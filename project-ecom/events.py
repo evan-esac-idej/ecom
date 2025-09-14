@@ -115,55 +115,60 @@ try:
     if op == '👥 Clientes':
         with col_a:
             for item in mob.items():
-                nome = item[0]
-  
 
                 # Caminho absoluto seguro baseado no arquivo atual
                 caminho_pasta = os.path.join(os.path.dirname(__file__), 'images')
-                caminho_imagem = os.path.join(caminho_pasta, f'{nome}.jpg')
-                
+                caminho_imagem = os.path.join(caminho_pasta, f'{item[0]}.jpg')
+
                 if os.path.exists(caminho_imagem):
                     st.image(caminho_imagem)
                 else:
                     st.warning(f"Imagem não encontrada: {caminho_imagem}")
 
                 # Número de unidades
-                if nome in ['Jardim', 'Piscina', 'Decorativos']:
-                    pr = st.number_input(f'Para adicionar **{nome}** Coloque o número 1', 0, 1, 0)
-                else:
-                    pr = st.number_input(f'Número de {nome}', 0, 100, 0)
-
-                a, i = st.columns(2)
-                with a:
-                    button = st.button(f'Adicionar', key=f'{nome}')
-                    if button:
-                        placeholder = st.empty()
-                        if pr == 0:
-                            placeholder.warning(f"⚠️ O número de **{nome}** deve ser igual ou maior que 1.")
-                            sleep(1.5)
-                            placeholder.empty()
-                        else:
-                            df_item = {
-                                'Data': pd.to_datetime(datetime.now()),
-                                'Categorias': nome,
-                                'Qtd': pr,
-                                'Preço': preco,
-                                'Valor': pr * preco
-                            }
-                            st.session_state.carrinho.append(df_item)
-                            st.toast(f"{pr}x{nome} no carrinho ✅!", icon="🎉")
-
-                with i:
-                    st.write(f'Preço: {preco} Mts/unit')
-
-
-        with col_e:
-            for item in alim.items():
-                st.image(f'images/{item[0]}.jpg')
-                if f'{item[0]}' in 'Bolo':
+                if item[0] in ['Jardim', 'Piscina', 'Decorativos']:
                     pr = st.number_input(f'Para adicionar **{item[0]}** Coloque o número 1', 0, 1, 0)
                 else:
                     pr = st.number_input(f'Número de {item[0]}', 0, 100, 0)
+
+                a, i = st.columns(2)
+                with a:
+                    button = st.button(f'Adicionar', key=f'{item[0]}')
+                    if button:
+                        placeholder = st.empty()
+                        if pr == 0:
+                            placeholder.warning(f"⚠️ O número de **{item[0]}** deve ser igual ou maior que 1.")
+                            sleep(1.5)
+                            placeholder.empty()
+                        else:
+                            df['Data'] = pd.to_datetime(datetime.now())
+                            df['Categorias'] = f'{item[0]}'
+                            df['Qtd'] = pr
+                            df['Preço'] = item[1]
+                            df['Valor'] = pr*item[1]
+                            st.session_state.carrinho.append(df)
+
+                            st.toast(f"{pr}x{item[0]} no carrinho ✅!", icon="🎉")
+
+                with i:
+                    st.write(f'Preço: {item[1]} Mts/unit')
+
+        with col_e:
+            for item in alim.items():
+                caminho_pasta = os.path.join(os.path.dirname(__file__), 'images')
+                caminho_imagem = os.path.join(caminho_pasta, f'{item[0]}.jpg')
+
+                if os.path.exists(caminho_imagem):
+                    st.image(caminho_imagem)
+                else:
+                    st.warning(f"Imagem não encontrada: {caminho_imagem}")
+
+                # Número de unidades
+                if item[0] in ['Bolo', 'Piscina', 'Decorativos']:
+                    pr = st.number_input(f'Para adicionar **{item[0]}** Coloque o número 1', 0, 1, 0)
+                else:
+                    pr = st.number_input(f'Número de {item[0]}', 0, 100, 0)
+
                 a,  i = st.columns(2)
                 with a:
                     button = st.button(f'Adicionar', key=f'{item[0]}')
@@ -185,11 +190,20 @@ try:
                     st.write(f'Preço: {item[1]} Mts/unit')
         with col_i:
             for item in entr.items():
-                st.image(f'images/{item[0]}.jpg')
-                if f'{item[0]}' in 'SomDJArtista ou BandaFogo de ArtifícioAfter Party':
+                caminho_pasta = os.path.join(os.path.dirname(__file__), 'images')
+                caminho_imagem = os.path.join(caminho_pasta, f'{item[0]}.jpg')
+
+                if os.path.exists(caminho_imagem):
+                    st.image(caminho_imagem)
+                else:
+                    st.warning(f"Imagem não encontrada: {caminho_imagem}")
+
+                # Número de unidades
+                if item[0] in 'SomDJArtista ou BandaFogo de ArtifícioAfter Party':
                     pr = st.number_input(f'Para adicionar **{item[0]}** Coloque o número 1', 0, 1, 0)
                 else:
                     pr = st.number_input(f'Número de {item[0]}', 0, 100, 0)
+
                 a, i = st.columns(2)
                 with a:
                     button = st.button(f'Adicionar', key=f'{item[0]}')
@@ -309,18 +323,6 @@ if button:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(1.5)
     placeholder.empty()
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

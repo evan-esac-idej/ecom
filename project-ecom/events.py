@@ -3,12 +3,18 @@ import pandas as pd
 from datetime import datetime
 import plotly.express as px
 from time import sleep
-
+import os
 
 st.set_page_config(page_title='ecom_events', layout='wide', page_icon='bar_chart')
 
 
-data_base = pd.read_excel('data_base/data.xlsx')
+base_dir = os.path.dirname(__file__)  
+file_path = os.path.join(base_dir, 'data_base', 'data.xlsx')
+
+data_base = pd.read_excel(file_path)
+
+
+
 new_data = pd.read_excel('data_base/new_data.xlsx')
 
 
@@ -243,6 +249,7 @@ if button:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(2)
     placeholder.empty()
+
 
 
 

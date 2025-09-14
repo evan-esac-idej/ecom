@@ -54,16 +54,6 @@ def load_excel(file_path, label):
 data_base = load_excel(data_base_path, "data.xlsx")
 new_data = load_excel(new_data_path, "new_data.xlsx")
 
-# ---------------------------------------------------
-# Mostrar se os dados foram carregados
-# ---------------------------------------------------
-if data_base is not None:
-    st.success("✅ data.xlsx carregado com sucesso!")
-    st.dataframe(data_base)
-
-if new_data is not None:
-    st.success("✅ new_data.xlsx carregado com sucesso!")
-    st.dataframe(new_data)
 
 
 
@@ -300,6 +290,7 @@ if button:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(1.5)
     placeholder.empty()
+
 
 
 

@@ -221,7 +221,7 @@ try:
         with st.sidebar:
             st.title('Carrinho')
             data = pd.DataFrame(st.session_state.carrinho, index=None)
-            data.to_excel(new_data_path)
+            data.to_excel(new_data_path, index=False)
             select = st.selectbox('Selecione o número da linha ou index', options=data.index)
             del_button = st.button('Eliminar Item')
             if del_button:
@@ -234,7 +234,7 @@ try:
             if keep:
                 st.success('Dados adicionados ao banco de dados com Sucesso.')
                 df = pd.concat([new_data, data_base], ignore_index=True)
-                df.to_excel('data_base/data.xlsx', index=False)
+                df.to_excel(data_base_path, index=False)
                 st.dataframe(df)
                 st.session_state.aval.append(data_base['Valor'].sum())
                 st.session_state.mean.append(data_base['Valor'].mean())
@@ -317,6 +317,7 @@ if button:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(1.5)
     placeholder.empty()
+
 
 
 

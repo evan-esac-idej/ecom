@@ -237,6 +237,13 @@ try:
             placeholder.empty()
 except:
     st.empty()
+button = st.sidebar.button('Sobre')
+if button:
+    placeholder = st.sidebar.empty()
+    placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
+    sleep(2)
+    placeholder.empty()
+
 
 
 

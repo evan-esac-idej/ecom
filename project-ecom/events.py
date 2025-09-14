@@ -11,6 +11,7 @@ st.set_page_config(page_title='ecom_events', layout='wide', page_icon='bar_chart
 def cache():
     df = pd.read_excel('data_base/data.xlsx')
     return df
+data_base = cache()
 new_data = pd.read_excel('data_base/new_data.xlsx')
 
 
@@ -247,6 +248,7 @@ if button:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(2)
     placeholder.empty()
+
 
 
 

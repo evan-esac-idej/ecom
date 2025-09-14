@@ -7,25 +7,10 @@ import os
 
 st.set_page_config(page_title='ecom_events', layout='wide', page_icon='bar_chart')
 
-base_dir = os.path.dirname('data_base/data.xlsx')        
-file_path = os.path.join(base_dir, 'data_base', 'data.xlsx')
-
-# Checar se o arquivo existe
-if os.path.exists(file_path):
-    data_base = pd.read_excel(file_path)
-    st.success("Arquivo carregado com sucesso!")
-else:
-    st.warning("Arquivo não encontrado! Faça upload abaixo.")
-    
-    # Permitir upload do arquivo pelo usuário
-    uploaded_file = st.file_uploader("Escolha o arquivo Excel", type="xlsx")
-    if uploaded_file is not None:
-        data_base = pd.read_excel(uploaded_file)
-        st.success("Arquivo carregado com sucesso pelo upload!")
-
-
-
+data_base = pd.read_excel('data_base/data.xlsx')
 new_data = pd.read_excel('data_base/new_data.xlsx')
+
+
 
 
 a, e, i = st.columns([1, 4, 1])
@@ -259,6 +244,7 @@ if button:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(2)
     placeholder.empty()
+
 
 
 

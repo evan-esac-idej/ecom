@@ -3,47 +3,13 @@ import pandas as pd
 from datetime import datetime
 import plotly.express as px
 from time import sleep
-import os
+
 
 st.set_page_config(page_title='ecom_events', layout='wide', page_icon='bar_chart')
 
 
-# ---------------------------------------------------
-# Função para verificar se a dependência openpyxl está instalada
-# ---------------------------------------------------
-try:
-    import openpyxl
-except ImportError:
-    st.error("⚠️ A biblioteca 'openpyxl' não está instalada. Execute 'pip install openpyxl'")
-    st.stop()  # para não continuar o app
-
-# ---------------------------------------------------
-# Caminhos relativos para os arquivos Excel
-# ---------------------------------------------------
-base_dir = os.path.dirname(__file__)  # pasta do script atual
-data_base_path = os.path.join(base_dir, 'data_base', 'data.xlsx')
-new_data_path = os.path.join(base_dir, 'data_base', 'new_data.xlsx')
-
-# ---------------------------------------------------
-# Função para carregar Excel com fallback para upload
-# ---------------------------------------------------
-def load_excel(file_path, label):
-    if os.path.exists(file_path):
-        try:
-            return pd.read_excel(file_path)
-        except Exception as e:
-            st.error(f"Erro ao ler {label}: {e}")
-            return None
-    else:
-        st.warning(f"Arquivo '{label}' não encontrado! Faça upload abaixo.")
-        uploaded_file = st.file_uploader(f"Escolha o arquivo Excel para {label}", type="xlsx", key=label)
-        if uploaded_file is not None:
-            try:
-                return pd.read_excel(uploaded_file)
-            except Exception as e:
-                st.error(f"Erro ao ler o arquivo enviado para {label}: {e}")
-    return None
-
+data_base = pd.read_excel('data_base/data.xlsx')
+new_data = pd.read_excel('data_base/new_data.xlsx')
 
 
 a, e, i = st.columns([1, 4, 1])
@@ -276,30 +242,8 @@ button = st.sidebar.button('Sobre')
 if button:
     placeholder = st.sidebar.empty()
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
-    sleep(3)
+    sleep(1.5)
     placeholder.empty()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -109,23 +109,26 @@ df = {}
 col_a, col_e, col_i = st.columns(3)
 import os
 
+import os
+
 try:
     if op == '👥 Clientes':
         with col_a:
-            mob_especiais = ['Jardim', 'Piscina', 'Decorativos']  # categorias especiais
-
             for item in mob.items():
-                nome, preco = item
-                caminho_imagem = os.path.join('images', f'{nome}.jpg')  # caminho seguro
+                nome = item[0]
+  
 
-                # Exibe imagem se existir, caso contrário mostra aviso
+                # Caminho absoluto seguro baseado no arquivo atual
+                caminho_pasta = os.path.join(os.path.dirname(__file__), 'images')
+                caminho_imagem = os.path.join(caminho_pasta, f'{nome}.jpg')
+                
                 if os.path.exists(caminho_imagem):
                     st.image(caminho_imagem)
                 else:
                     st.warning(f"Imagem não encontrada: {caminho_imagem}")
 
                 # Número de unidades
-                if nome in mob_especiais:
+                if nome in ['Jardim', 'Piscina', 'Decorativos']:
                     pr = st.number_input(f'Para adicionar **{nome}** Coloque o número 1', 0, 1, 0)
                 else:
                     pr = st.number_input(f'Número de {nome}', 0, 100, 0)
@@ -306,6 +309,7 @@ if button:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(1.5)
     placeholder.empty()
+
 
 
 

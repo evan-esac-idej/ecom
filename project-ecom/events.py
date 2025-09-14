@@ -218,49 +218,27 @@ try:
 
                 with i:
                     st.write(f'Preço: {item[1]} Mts/unit')
-
         with st.sidebar:
             st.title('Carrinho')
-        
-            # Cria a pasta 'data_base' caso não exista
-            os.makedirs('data_base', exist_ok=True)
-        
-            # Cria o DataFrame do carrinho
             data = pd.DataFrame(st.session_state.carrinho, index=None)
-            # Salva temporariamente
-            data.to_excel('data_base/new_data.xlsx', index=False)
-        
-            # Seleção de item para exclusão
+            data.to_excel(new_data_path)
             select = st.selectbox('Selecione o número da linha ou index', options=data.index)
             del_button = st.button('Eliminar Item')
             if del_button:
                 st.session_state.carrinho.pop(select)
                 st.rerun()
-        
-            # Mostra carrinho e total
             st.dataframe(data)
-            st.metric("O Pagamento total", f"{data['Valor'].sum():.2f} Mts")
-        
-            # Adicionar ao banco de dados
+            st.metric(f"O Pagamento total", f"{data['Valor'].sum():.2f} Mts")
+
             keep = st.button('Adicionar ao Banco de Dados')
             if keep:
-                st.success('Dados adicionados ao banco de dados com sucesso!')
-        
-                # Carrega arquivos existentes, se existirem
-                if os.path.exists('data_base/data.xlsx'):
-                    data_base = pd.read_excel('data_base/data.xlsx')
-                else:
-                    data_base = pd.DataFrame(columns=['Data','Categorias','Qtd','Preço','Valor'])
-        
-                # Concatena os novos dados
-                df = pd.concat([data_base, data], ignore_index=True)
+                st.success('Dados adicionados ao banco de dados com Sucesso.')
+                df = pd.concat([new_data, data_base], ignore_index=True)
                 df.to_excel('data_base/data.xlsx', index=False)
-        
-                # Atualiza métricas
                 st.dataframe(df)
-                st.session_state.aval.append(df['Valor'].sum())
-                st.session_state.mean.append(df['Valor'].mean())
-                st.session_state.mean.append(df['Valor'].max())
+                st.session_state.aval.append(data_base['Valor'].sum())
+                st.session_state.mean.append(data_base['Valor'].mean())
+                st.session_state.mean.append(data_base['Valor'].max())
 
 
     if op == '📈Financeiro':
@@ -339,6 +317,7 @@ if button:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(1.5)
     placeholder.empty()
+
 
 
 

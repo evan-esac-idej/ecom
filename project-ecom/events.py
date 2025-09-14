@@ -7,9 +7,6 @@ import os
 
 st.set_page_config(page_title='ecom_events', layout='wide', page_icon='bar_chart')
 
-import streamlit as st
-import pandas as pd
-import os
 
 # ---------------------------------------------------
 # Função para verificar se a dependência openpyxl está instalada
@@ -24,8 +21,8 @@ except ImportError:
 # Caminhos relativos para os arquivos Excel
 # ---------------------------------------------------
 base_dir = os.path.dirname(__file__)  # pasta do script atual
-data_base = os.path.join(base_dir, 'data_base', 'data.xlsx')
-new_data = os.path.join(base_dir, 'data_base', 'new_data.xlsx')
+data_base_path = os.path.join(base_dir, 'data_base', 'data.xlsx')
+new_data_path = os.path.join(base_dir, 'data_base', 'new_data.xlsx')
 
 # ---------------------------------------------------
 # Função para carregar Excel com fallback para upload
@@ -281,6 +278,7 @@ if button:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(3)
     placeholder.empty()
+
 
 
 

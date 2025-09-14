@@ -8,8 +8,20 @@ from time import sleep
 st.set_page_config(page_title='ecom_events', layout='wide', page_icon='bar_chart')
 
 
+# Cria data_base se não existir
+os.makedirs('data_base', exist_ok=True)
+
+# Cria arquivos vazios caso não existam
+if not os.path.exists('data_base/data.xlsx'):
+    pd.DataFrame(columns=['Data','Categorias','Qtd','Preço','Valor']).to_excel('data_base/data.xlsx', index=False)
+
+if not os.path.exists('data_base/new_data.xlsx'):
+    pd.DataFrame(columns=['Data','Categorias','Qtd','Preço','Valor']).to_excel('data_base/new_data.xlsx', index=False)
+
+# Agora você pode ler os arquivos sem erro
 data_base = pd.read_excel('data_base/data.xlsx')
 new_data = pd.read_excel('data_base/new_data.xlsx')
+
 
 
 a, e, i = st.columns([1, 4, 1])
@@ -244,6 +256,7 @@ if button:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(1.5)
     placeholder.empty()
+
 
 
 

@@ -68,6 +68,16 @@ import streamlit as st
 from time import sleep
 
 # Exemplo dos dicionários
+import streamlit as st
+import pandas as pd
+from datetime import datetime
+from time import sleep
+import os
+import plotly.express as px
+
+# -----------------------------
+# Dicionários de produtos
+# -----------------------------
 mob = {
     'Mesas': 1000,
     'Cadeiras': 100,
@@ -95,63 +105,174 @@ entr = {
     'After Party': 3000
 }
 
+# -----------------------------
 # Categorias especiais
+# -----------------------------
 mob_especiais = ['Jardim', 'Piscina', 'Decorativos']
 alim_especiais = ['Bolo']
 entr_especiais = ['Som', 'DJ', 'Artista ou Banda', 'Fogo de Artifício', 'After Party']
 
-# Inicializar session_state
+# -----------------------------
+# Inicialização do session_state
+# -----------------------------
 for key in ['max', 'mean', 'aval', 'carrinho']:
     if key not in st.session_state:
         st.session_state[key] = [0] if key != 'carrinho' else []
 
-# Função para mostrar itens
-def mostrar_item(item_dict, especiais):
-    for nome, preco in item_dict.items():
-        img_path = os.path.join('images', f'{nome}.jpg')
-        if os.path.exists(img_path):
-            st.image(img_path, caption=f'{nome} - Preço: {preco}')
-        else:
-            st.warning(f"Imagem não encontrada: {img_path}")
+df = {}
 
-        # Número de unidades
-        pr = st.number_input(
-            f'Para adicionar **{nome}**', 0, 1, 0
-        ) if nome in especiais else st.number_input(
-            f'Número de {nome}', 0, 100, 0
-        )
-
-        a, i = st.columns(2)
-        with a:
-            button = st.button(f'Adicionar', key=f'{nome}')
-            if button:
-                placeholder = st.empty()
-                if pr == 0:
-                    placeholder.warning(f"⚠️ O número de **{nome}** deve ser igual ou maior que 1.")
-                    sleep(1.5)
-                    placeholder.empty()
-                else:
-                    df_item = {
-                        'Data': pd.to_datetime(datetime.now()),
-                        'Categorias': nome,
-                        'Qtd': pr,
-                        'Preço': preco,
-                        'Valor': pr * preco
-                    }
-                    st.session_state.carrinho.append(df_item)
-                    st.toast(f"{pr}x{nome} no carrinho ✅!", icon="🎉")
-        with i:
-            st.write(f'Preço: {preco} Mts/unit')
-
-# Exibir itens nas colunas
+# -----------------------------
+# Colunas principais
+# -----------------------------
 col_a, col_e, col_i = st.columns(3)
-with col_a:
-    mostrar_item(mob, mob_especiais)
-with col_e:
-    mostrar_item(alim, alim_especiais)
-with col_i:
-    mostrar_item(entr, entr_especiais)
 
+try:
+    if op == '👥 Clientes':
+        # -------- MOBILIÁRIO --------
+        with col_a:
+            for item in mob.items():
+                nome, preco = item
+                img_path = os.path.join('images', f'{nome}.jpg')
+                if os.path.exists(img_path):
+                    st.image(img_path)
+                else:
+                    st.warning(f"Imagem não encontrada: {img_path}")
+
+                # Número de unidades
+                pr = st.number_input(
+                    f'Para adicionar **{nome}** Coloque o número 1', 0, 1, 0
+                ) if nome in mob_especiais else st.number_input(
+                    f'Número de {nome}', 0, 100, 0
+                )
+
+                a, i = st.columns(2)
+                with a:
+                    button = st.button(f'Adicionar', key=f'{nome}')
+                    if button:
+                        placeholder = st.empty()
+                        if pr == 0:
+                            placeholder.warning(f"⚠️ O número de **{nome}** deve ser igual ou maior que 1.")
+                            sleep(1.5)
+                            placeholder.empty()
+                        else:
+                            df_item = {
+                                'Data': pd.to_datetime(datetime.now()),
+                                'Categorias': nome,
+                                'Qtd': pr,
+                                'Preço': preco,
+                                'Valor': pr*preco
+                            }
+                            st.session_state.carrinho.append(df_item)
+                            st.toast(f"{pr}x{nome} no carrinho ✅!", icon="🎉")
+                with i:
+                    st.write(f'Preço: {preco} Mts/unit')
+
+        # -------- ALIMENTOS --------
+        with col_e:
+            for item in alim.items():
+                nome, preco = item
+                img_path = os.path.join('images', f'{nome}.jpg')
+                if os.path.exists(img_path):
+                    st.image(img_path)
+                else:
+                    st.warning(f"Imagem não encontrada: {img_path}")
+
+                pr = st.number_input(
+                    f'Para adicionar **{nome}** Coloque o número 1', 0, 1, 0
+                ) if nome in alim_especiais else st.number_input(
+                    f'Número de {nome}', 0, 100, 0
+                )
+
+                a, i = st.columns(2)
+                with a:
+                    button = st.button(f'Adicionar', key=f'{nome}')
+                    if button:
+                        placeholder = st.empty()
+                        if pr == 0:
+                            placeholder.warning(f"⚠️ O número de **{nome}** deve ser igual ou maior que 1.")
+                            sleep(1.5)
+                            placeholder.empty()
+                        else:
+                            df_item = {
+                                'Data': pd.to_datetime(datetime.now()),
+                                'Categorias': nome,
+                                'Qtd': pr,
+                                'Preço': preco,
+                                'Valor': pr*preco
+                            }
+                            st.session_state.carrinho.append(df_item)
+                            st.toast(f"{pr}x{nome} no carrinho ✅!", icon="🎉")
+                with i:
+                    st.write(f'Preço: {preco} Mts/unit')
+
+        # -------- ENTRETENIMENTO --------
+        with col_i:
+            for item in entr.items():
+                nome, preco = item
+                img_path = os.path.join('images', f'{nome}.jpg')
+                if os.path.exists(img_path):
+                    st.image(img_path)
+                else:
+                    st.warning(f"Imagem não encontrada: {img_path}")
+
+                pr = st.number_input(
+                    f'Para adicionar **{nome}** Coloque o número 1', 0, 1, 0
+                ) if nome in entr_especiais else st.number_input(
+                    f'Número de {nome}', 0, 100, 0
+                )
+
+                a, i = st.columns(2)
+                with a:
+                    button = st.button(f'Adicionar', key=f'{nome}')
+                    if button:
+                        placeholder = st.empty()
+                        if pr == 0:
+                            placeholder.warning(f"⚠️ O número de **{nome}** deve ser igual ou maior que 1.")
+                            sleep(1.5)
+                            placeholder.empty()
+                        else:
+                            df_item = {
+                                'Data': pd.to_datetime(datetime.now()),
+                                'Categorias': nome,
+                                'Qtd': pr,
+                                'Preço': preco,
+                                'Valor': pr*preco
+                            }
+                            st.session_state.carrinho.append(df_item)
+                            st.toast(f"{pr}x{nome} no carrinho ✅!", icon="🎉")
+                with i:
+                    st.write(f'Preço: {preco} Mts/unit')
+
+        # -------- SIDEBAR CARRINHO --------
+        with st.sidebar:
+            st.title('Carrinho')
+            data = pd.DataFrame(st.session_state.carrinho)
+            data.to_excel('data_base/new_data.xlsx', index=False)
+            select = st.selectbox('Selecione o número da linha ou index', options=data.index)
+            del_button = st.button('Eliminar Item')
+            if del_button:
+                st.session_state.carrinho.pop(select)
+                st.rerun()
+            st.dataframe(data)
+            st.metric(f"O Pagamento total", f"{data['Valor'].sum():.2f} Mts")
+
+            keep = st.button('Adicionar ao Banco de Dados')
+            if keep:
+                st.success('Dados adicionados ao banco de dados com Sucesso.')
+                df_concat = pd.concat([new_data, data_base], ignore_index=True)
+                df_concat.to_excel('data_base/data.xlsx', index=False)
+                st.dataframe(df_concat)
+                st.session_state.aval.append(data_base['Valor'].sum())
+                st.session_state.mean.append(data_base['Valor'].mean())
+                st.session_state.max.append(data_base['Valor'].max())
+
+# ------------------------------------------------------
+# Restante do código (Financeiro, Bancos de Dados, etc.)
+# permanece igual, só ajustando imagens da mesma forma
+# ------------------------------------------------------
+
+except:
+    st.empty()
 
 
 

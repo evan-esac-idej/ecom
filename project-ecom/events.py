@@ -11,8 +11,8 @@ base_dir = os.path.dirname('data_base/data.xlsx')
 file_path = os.path.join(base_dir, 'data_base', 'data.xlsx')
 
 # Checar se o arquivo existe
-if os.path.exists(data_base/data.xlsx):
-    data_base = pd.read_excel(data_base/data.xlsx)
+if os.path.exists(file_path):
+    data_base = pd.read_excel(file_path)
     st.success("Arquivo carregado com sucesso!")
 else:
     st.warning("Arquivo não encontrado! Faça upload abaixo.")

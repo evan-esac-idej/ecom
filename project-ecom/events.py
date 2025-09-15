@@ -308,10 +308,9 @@ try:
 except:
     st.empty()
 with tab4:
-    placeholder = st.sidebar.empty()
-    placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
-    sleep(14)
-    placeholder.empty()
+    st.text('Desenvolvido por Ginélio Hermilio 🤠')
+    
+
 
 
 

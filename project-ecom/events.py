@@ -54,10 +54,10 @@ new_data = load_excel(new_data_path, "new_data.xlsx")
 
 
 
-a, e, i = st.columns([1, 4, 1])
+a, e, i = st.columns([2, 2, 2])
 with e:
-    st.title('Bem vindo EcomWeb Eventos')
-
+    st.subheader(':grey[*Bem vindo Ecom Web Eventos*]')
+    st.markdown('---')
 
 with st.sidebar:
     op = st.selectbox('Catálogo', options=['👥 Clientes', '📈Financeiro', '🗄️Bancos de Dados'], placeholder='Home')
@@ -317,6 +317,7 @@ if button:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(1.5)
     placeholder.empty()
+
 
 
 

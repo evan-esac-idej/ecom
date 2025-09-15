@@ -304,13 +304,14 @@ try:
             sleep(1.5)
             placeholder.empty()
     with tab4:
-    placeholder = st.sidebar.empty()
-    placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
-    sleep(14)
-    placeholder.empty()
+        placeholder = st.sidebar.empty()
+        placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
+        sleep(14)
+        placeholder.empty()
 
 except:
     st.empty()
+
 
 
 

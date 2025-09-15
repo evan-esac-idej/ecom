@@ -276,8 +276,7 @@ try:
             preview = st.session_state.aval[::-1][0]
             total = data_base['Valor'].sum()
             growth = ((total - preview) / preview) * 100
-            if preview == 0:
-                growth = 0
+        
             st.metric("Total de Vendas", f"{data_base['Valor'].sum():,.2f} Mts",
                       f"{growth:.2f}%")
         with col2:
@@ -402,6 +401,7 @@ except:
 with tab4:
     st.text('Desenvolvido por Ginélio Hermilio 🤠')
     
+
 
 
 

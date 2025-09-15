@@ -223,7 +223,7 @@ try:
                 st.session_state.carrinho.pop(select)
                 st.rerun()
             st.dataframe(data)
-            st.metric(f"O Pagamento total", f"{data['Valor'].sum():.2f} Mts")
+            st.metric(f"O Pagamento total", f"{data['Valor'].sum():,.2f} Mts")
 
             keep = st.button('Adicionar ao Banco de Dados')
             if keep:
@@ -242,8 +242,8 @@ try:
             preview = st.session_state.aval[::-1][0]
             total = data_base['Valor'].sum()
             growth = ((total - preview) / preview) * 100
-            st.metric("Total de Vendas", f"{data_base['Valor'].sum():.2f} Mts",
-                      f"{growth:.2f}%")
+            st.metric("Total de Vendas", f"{data_base['Valor'].sum():,.2f} Mts",
+                      f"{growth:,.2f}%")
 
             fig_bar = px.bar(data_base, x="Categorias", y="Valor",
                              title="Valores por Categoria")
@@ -252,7 +252,7 @@ try:
             preview = st.session_state.mean[::-1][0]
             total = data_base['Valor'].mean()
             growth = ((total - preview) / preview) * 100
-            st.metric("Média de Venda", f"{data_base['Valor'].mean():.2f} Mts", f"{growth:.2f}%")
+            st.metric("Média de Venda", f"{data_base['Valor'].mean():,.2f} Mts", f"{growth:,.2f}%")
             fig_pie = px.pie(data_base, values='Valor', names='Categorias',
                              title='Percentagem de Categorias')
             st.plotly_chart(fig_pie, use_container_width=True)
@@ -260,7 +260,7 @@ try:
             preview = st.session_state.max[::-1][0]
             total = data_base['Valor'].max()
             growth = ((total - preview) / preview) * 100
-            st.metric("Máximo das Vendas", f"{data_base['Valor'].max():.2f} Mts",  f"{growth:.2f}%")
+            st.metric("Máximo das Vendas", f"{data_base['Valor'].max():,.2f} Mts",  f"{growth:,.2f}%")
             fig_line = px.line(data_base, x="Data", y="Valor", color="Categorias",
                                markers=True, title="Evolução por Dia")
             st.plotly_chart(fig_line, use_container_width=True)
@@ -281,18 +281,18 @@ try:
             sum_cat = df_filt['Valor'].sum()
             total = data_base['Valor'].sum()
             per_cat = (sum_cat / total) * 100
-            st.metric(f"Total de Vendas de "+", ".join(cat), f"{df_filt['Valor'].sum():.2f} Mts",
-                      f"{per_cat:.2f}% dos produtos")
+            st.metric(f"Total de Vendas de "+", ".join(cat), f"{df_filt['Valor'].sum():,.2f} Mts",
+                      f"{per_cat:,.2f}% dos produtos")
 
         with col2:
             qtd_total = df_filt['Qtd'].sum()
             total = data_base['Qtd'].sum()
             per_cat = (qtd_total / total) * 100
-            st.metric("Qtd Vendidas", f"{qtd_total:.2f} Unidades", f"{per_cat:.2f}% das unidades")
+            st.metric("Qtd Vendidas", f"{qtd_total:,.2f} Unidades", f"{per_cat:,.2f}% das unidades")
 
         with col3:
             total = df_filt['Valor'].max()
-            st.metric("Máximo de venda em Dia", f"{total:.2f} Mts", f"{growth:.2f}%")
+            st.metric("Máximo de venda em Dia", f"{total:,.2f} Mts", f"{growth:,.2f}%")
             st.dataframe(df_filt)
 except:
     st.empty()
@@ -310,6 +310,7 @@ except:
 with tab4:
     st.text('Desenvolvido por Ginélio Hermilio 🤠')
     
+
 
 
 

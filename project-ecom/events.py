@@ -294,7 +294,9 @@ try:
             total = df_filt['Valor'].max()
             st.metric("Máximo de venda em Dia", f"{total:.2f} Mts", f"{growth:.2f}%")
             st.dataframe(df_filt)
-
+except:
+    st.empty()
+try:
     with tab3:
         st.dataframe(data_base)
         button = st.button('Exportar dados em Excel')
@@ -303,14 +305,15 @@ try:
             placeholder.success(f"Novo Banco de Dados arquivado com sucesso ✅")
             sleep(1.5)
             placeholder.empty()
-    with tab4:
-        placeholder = st.sidebar.empty()
-        placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
-        sleep(14)
-        placeholder.empty()
-
 except:
     st.empty()
+with tab4:
+    placeholder = st.sidebar.empty()
+    placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
+    sleep(14)
+    placeholder.empty()
+
+
 
 
 

@@ -50,11 +50,7 @@ def load_excel(file_path, label):
 data_base = load_excel(data_base_path, "data.xlsx")
 new_data = load_excel(new_data_path, "new_data.xlsx")
 
-
-
-
-
-a, e, i = st.columns([2, 2, 2])
+a, e, i = st.columns([2, 3, 2])
 with e:
     st.subheader(':grey[*Bem vindo Ecom Web Eventos*]')
     st.markdown('---')
@@ -317,6 +313,7 @@ if button:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(1.5)
     placeholder.empty()
+
 
 
 

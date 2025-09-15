@@ -285,18 +285,21 @@ with tab2:
         growth = ((total - preview) / preview) * 100
         if preview == 0:
             growth = 0
+        else:
+            growth = ((total - preview) / preview) * 100
         st.metric("Média de Venda", f"{data_base['Valor'].mean():,.2f} Mts", f"{growth:,.2f}%")
     with col3:
         preview = st.session_state.max[::-1][0]
         total = data_base['Valor'].max()
-        growth = ((total - preview) / preview) * 100
         if preview == 0:
             growth = 0
+        else:
+            growth = ((total - preview) / preview) * 100
         st.metric("Máximo das Vendas", f"{data_base['Valor'].max():,.2f} Mts",  f"{growth:,.2f}%")
     with col4:
         preview = st.session_state.len[::-1][0]
         total = len(data_base)
-        growth = ((total - preview) / preview) * 100
+        
         if preview == 0:
             growth = 0
         else:
@@ -402,6 +405,7 @@ except:
 with tab4:
     st.text('Desenvolvido por Ginélio Hermilio 🤠')
     
+
 
 
 

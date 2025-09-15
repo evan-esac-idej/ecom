@@ -98,7 +98,7 @@ if "carrinho" not in st.session_state:
 df = {}
 
 
-tab1, tab2, tab3 = st.tabs(['👥Clientes', '📈Financeiro', '🗄️Banco de Dados', '⚙️Sobre'])
+tab1, tab2, tab3, tab4 = st.tabs(['👥Clientes', '📈Financeiro', '🗄️Banco de Dados', '⚙️Sobre'])
 try:
     with tab1:
         col_a, col_e, col_i = st.columns(3)
@@ -311,6 +311,7 @@ try:
 
 except:
     st.empty()
+
 
 
 

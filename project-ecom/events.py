@@ -299,6 +299,8 @@ with tab2:
         growth = ((total - preview) / preview) * 100
         if preview == 0:
             growth = 0
+        else:
+            growth = ((total - preview) / preview) * 100
         st.metric(" Total de Pedidos", f"{len(data_base):,}",  f"{growth:,.2f}%")
     st.markdown('---')
     col1, col2 = st.columns(2)
@@ -400,6 +402,7 @@ except:
 with tab4:
     st.text('Desenvolvido por Ginélio Hermilio 🤠')
     
+
 
 
 

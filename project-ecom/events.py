@@ -98,11 +98,12 @@ if 'aval' not in st.session_state:
 if "carrinho" not in st.session_state:
     st.session_state.carrinho = []
 df = {}
-col_a, col_e, col_i = st.columns(3)
 
 
+tab1, tab2, tab3 = st.tabs(['👥Clientes', '📈Financeiro', '🗄️Banco de Dados', '⚙️Sobre']
 try:
-    if op == '👥 Clientes':
+    with tab1:
+        col_a, col_e, col_i = st.columns(3)
         with col_a:
             for item in mob.items():
 
@@ -237,7 +238,7 @@ try:
                 st.session_state.mean.append(data_base['Valor'].max())
 
 
-    if op == '📈Financeiro':
+    with tab2:
         col1, col2, col3 = st.columns(3)
         with col1:
             preview = st.session_state.aval[::-1][0]
@@ -296,7 +297,7 @@ try:
             st.metric("Máximo de venda em Dia", f"{total:.2f} Mts", f"{growth:.2f}%")
             st.dataframe(df_filt)
 
-    if op == '🗄️Bancos de Dados':
+    with tab3:
         st.dataframe(data_base)
         button = st.button('Exportar dados em Excel')
         if button:
@@ -304,15 +305,16 @@ try:
             placeholder.success(f"Novo Banco de Dados arquivado com sucesso ✅")
             sleep(1.5)
             placeholder.empty()
+    with tab4:
+    placeholder = st.sidebar.empty()
+    placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
+    sleep(14)
+    placeholder.empty()
+
 except:
     st.empty()
 
-button = st.sidebar.button('Sobre')
-if button:
-    placeholder = st.sidebar.empty()
-    placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
-    sleep(1.5)
-    placeholder.empty()
+
 
 
 

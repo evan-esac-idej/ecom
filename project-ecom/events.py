@@ -112,6 +112,10 @@ entr = {
     'After Party': 3000
 
 }
+
+if 'len' not in st.session_state:
+    st.session_state.len = [0]
+
 if 'max' not in st.session_state:
     st.session_state.max = [0]
 
@@ -285,7 +289,7 @@ with tab2:
         st.metric("Máximo das Vendas", f"{data_base['Valor'].max():,.2f} Mts",  f"{growth:,.2f}%")
     with col4:
         preview = st.session_state.len[::-1][0]
-        total = data_base['Valor'].sum()
+        total = len(data_base)
         growth = ((total - preview) / preview) * 100
         st.metric(" Total de Pedidos", f"{len(data_base):,}",  f"{growth:,.2f}%")
     st.markdown('---')
@@ -387,6 +391,7 @@ except:
 with tab4:
     st.text('Desenvolvido por Ginélio Hermilio 🤠')
     
+
 
 
 

@@ -55,8 +55,6 @@ with e:
     st.subheader(':grey[*Bem vindo Ecom Web Eventos*]')
     st.markdown('---')
 
-with st.sidebar:
-    op = st.selectbox('Catálogo', options=['👥 Clientes', '📈Financeiro', '🗄️Bancos de Dados'], placeholder='Home')
 
 mob = {
     'Mesas': 1000,
@@ -100,7 +98,7 @@ if "carrinho" not in st.session_state:
 df = {}
 
 
-tab1, tab2, tab3 = st.tabs(['👥Clientes', '📈Financeiro', '🗄️Banco de Dados', '⚙️Sobre']
+tab1, tab2, tab3 = st.tabs(['👥Clientes', '📈Financeiro', '🗄️Banco de Dados', '⚙️Sobre'])
 try:
     with tab1:
         col_a, col_e, col_i = st.columns(3)
@@ -313,6 +311,7 @@ try:
 
 except:
     st.empty()
+
 
 
 

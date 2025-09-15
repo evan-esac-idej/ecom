@@ -52,8 +52,36 @@ new_data = load_excel(new_data_path, "new_data.xlsx")
 
 a, e, i = st.columns([2, 3, 2])
 with e:
-    st.subheader(':grey[*Bem vindo Ecom Web Eventos*]')
-    st.markdown('---')
+    st.markdown(
+        """
+        <h1 style="font-family:sans-serif; color:#1f77b4; text-align:center;">
+            <span class="animated-title">Bem vindo a Ecom-Web Eventos</span>
+        </h1>
+
+        <style>
+        .animated-title {
+            display: inline-block;
+            overflow: hidden;
+            border-right: .15em solid #1f77b4;
+            white-space: nowrap;
+            animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
+            font-size: 20px;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #1f77b4; }
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
 
 
 mob = {
@@ -235,67 +263,116 @@ try:
                 st.session_state.mean.append(data_base['Valor'].mean())
                 st.session_state.mean.append(data_base['Valor'].max())
 
-
-    with tab2:
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            preview = st.session_state.aval[::-1][0]
-            total = data_base['Valor'].sum()
-            growth = ((total - preview) / preview) * 100
-            st.metric("Total de Vendas", f"{data_base['Valor'].sum():,.2f} Mts",
-                      f"{growth:,.2f}%")
-
-            fig_bar = px.bar(data_base, x="Categorias", y="Valor",
-                             title="Valores por Categoria")
-            st.plotly_chart(fig_bar, use_container_width=True)
-        with col2:
-            preview = st.session_state.mean[::-1][0]
-            total = data_base['Valor'].mean()
-            growth = ((total - preview) / preview) * 100
-            st.metric("Média de Venda", f"{data_base['Valor'].mean():,.2f} Mts", f"{growth:,.2f}%")
-            fig_pie = px.pie(data_base, values='Valor', names='Categorias',
-                             title='Percentagem de Categorias')
-            st.plotly_chart(fig_pie, use_container_width=True)
-        with col3:
-            preview = st.session_state.max[::-1][0]
-            total = data_base['Valor'].max()
-            growth = ((total - preview) / preview) * 100
-            st.metric("Máximo das Vendas", f"{data_base['Valor'].max():,.2f} Mts",  f"{growth:,.2f}%")
-            fig_line = px.line(data_base, x="Data", y="Valor", color="Categorias",
-                               markers=True, title="Evolução por Dia")
-            st.plotly_chart(fig_line, use_container_width=True)
-        st.markdown('---')
-        group_lis = st.multiselect('Verificar o Valor Total em:', options=data_base.columns, default='Data')
-        grouped = data_base.groupby(group_lis)['Valor'].sum()
-        df_grouped = pd.DataFrame(grouped)
-        df_ = df_grouped.rename(columns={'Valor': 'Valor total'})
-        with st.expander(''):
-            st.dataframe(df_)
-
-        st.markdown('---')
-
-        cat = st.multiselect('Selecione a(s) Categoria(s) para análise', options=data_base['Categorias'].unique(),)
-        df_filt = data_base.query('Categorias == @cat')
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            sum_cat = df_filt['Valor'].sum()
-            total = data_base['Valor'].sum()
-            per_cat = (sum_cat / total) * 100
-            st.metric(f"Total de Vendas de "+", ".join(cat), f"{df_filt['Valor'].sum():,.2f} Mts",
-                      f"{per_cat:,.2f}% dos produtos")
-
-        with col2:
-            qtd_total = df_filt['Qtd'].sum()
-            total = data_base['Qtd'].sum()
-            per_cat = (qtd_total / total) * 100
-            st.metric("Qtd Vendidas", f"{qtd_total:,.2f} Unidades", f"{per_cat:,.2f}% das unidades")
-
-        with col3:
-            total = df_filt['Valor'].max()
-            st.metric("Máximo de venda em Dia", f"{total:,.2f} Mts", f"{growth:,.2f}%")
-            st.dataframe(df_filt)
 except:
     st.empty()
+with tab2:
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        preview = st.session_state.aval[::-1][0]
+        total = data_base['Valor'].sum()
+        growth = ((total - preview) / preview) * 100
+        st.metric("Total de Vendas", f"{data_base['Valor'].sum():,.2f} Mts",
+                  f"{growth:.2f}%")
+    with col2:
+        preview = st.session_state.mean[::-1][0]
+        total = data_base['Valor'].mean()
+        growth = ((total - preview) / preview) * 100
+        st.metric("Média de Venda", f"{data_base['Valor'].mean():,.2f} Mts", f"{growth:,.2f}%")
+    with col3:
+        preview = st.session_state.max[::-1][0]
+        total = data_base['Valor'].max()
+        growth = ((total - preview) / preview) * 100
+        st.metric("Máximo das Vendas", f"{data_base['Valor'].max():,.2f} Mts",  f"{growth:,.2f}%")
+    with col4:
+        preview = st.session_state.len[::-1][0]
+        total = data_base['Valor'].sum()
+        growth = ((total - preview) / preview) * 100
+        st.metric(" Total de Pedidos", f"{len(data_base):,}",  f"{growth:,.2f}%")
+    st.markdown('---')
+    col1, col2 = st.columns(2)
+    with col1:
+        fig_bar = px.bar(data_base.groupby("Categorias")["Qtd"].sum().sort_values(ascending=False).reset_index()
+                         , x="Categorias", y="Qtd",
+                         title="Produtos mais vendidos", text='Qtd', color='Qtd')
+        fig_bar.update_traces(textposition='outside')
+        st.plotly_chart(fig_bar, use_container_width=True)
+    with col2:
+        import plotly.graph_objects as go
+        cores = [
+            # Azul
+            "#4e79a7",  # Azul médio
+            "#6baed6",  # Azul claro
+            "#2c3e50",  # Azul escuro
+            # Verde
+            "#59a14f",  # Verde médio
+            "#8cd17d",  # Verde claro
+            "#2f4f4f",  # Verde escuro
+            # Cinza
+            "#bab0ab",  # Cinza claro
+            "#7f7f7f",  # Cinza médio
+            "#4f4f4f",  # Cinza escuro
+            # Vermelho frio
+            "#d62728",  # Vermelho médio
+            "#ff6f61",  # Vermelho claro
+            "#8b0000",  # Vermelho escuro
+            # Amarelo frio
+            "#f1ce63",  # Amarelo médio
+            "#fffacd",  # Amarelo bem claro
+            "#c2b280"  # Amarelo acinzentado
+        ]
+
+        fig = go.Figure(data=[go.Pie(title='Percentagem de cada categoria',
+            labels=data_base['Categorias'],
+            values=data_base['Valor'],
+            hole=0.5,
+            marker=dict(colors=cores),  # aplica cores fixas
+            pull=[0, 0.1, 0, 0.3]
+        )])
+        fig.update_traces(textposition='inside', textinfo='percent')
+        st.plotly_chart(fig, use_container_width=True)
+
+    col1, col2 = st.columns(2)
+    with col1:
+        fig_line = px.line(data_base, x="Data", y="Valor", color="Categorias",
+                           markers=True, title="Evolução Diária")
+        st.plotly_chart(fig_line, use_container_width=True)
+    with col2:
+
+        receita = data_base.groupby("Categorias")["Valor"].sum().sort_values(ascending=False).reset_index()
+        figh = px.bar(receita, x="Valor", y="Categorias", orientation="h",
+                      title="Produtos por Receita", text="Valor")
+        figh.update_traces(textposition='inside')
+        st.plotly_chart(figh, use_container_width=True)
+    st.markdown('---')
+    group_lis = st.multiselect('Verificar o Valor Total em:', options=data_base.columns, default='Data')
+    grouped = data_base.groupby(group_lis)['Valor'].sum()
+    df_grouped = pd.DataFrame(grouped)
+    df_ = df_grouped.rename(columns={'Valor': 'Valor total'})
+    with st.expander(''):
+        st.dataframe(df_)
+
+    st.markdown('---')
+
+    cat = st.multiselect('Selecione a(s) Categoria(s) para análise', options=data_base['Categorias'].unique(),)
+    df_filt = data_base.query('Categorias == @cat')
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        sum_cat = df_filt['Valor'].sum()
+        total = data_base['Valor'].sum()
+        per_cat = (sum_cat / total) * 100
+        st.metric(f"Total de Vendas de "+", ".join(cat), f"{df_filt['Valor'].sum():,.2f} Mts",
+                  f"{per_cat:.2f}% dos produtos")
+
+    with col2:
+        qtd_total = df_filt['Qtd'].sum()
+        total = data_base['Qtd'].sum()
+        per_cat = (qtd_total / total) * 100
+        st.metric("Qtd Vendidas", f"{qtd_total:,.2f} Unidades", f"{per_cat:,.2f}% das unidades")
+
+    with col3:
+        total = df_filt['Valor'].max()
+        st.metric("Máximo de venda em Dia", f"{total:,.2f} Mts", f"{growth:,.2f}%")
+    st.dataframe(df_filt)
 try:
     with tab3:
         st.dataframe(data_base)
@@ -310,6 +387,7 @@ except:
 with tab4:
     st.text('Desenvolvido por Ginélio Hermilio 🤠')
     
+
 
 
 

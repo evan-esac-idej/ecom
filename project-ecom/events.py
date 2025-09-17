@@ -70,24 +70,11 @@ dados = {
     }
 }
 
-
-
-import os
-from datetime import datetime
-import pandas as pd
-from time import sleep
-import streamlit as st
-
-# Inicializa session_state
 for key in ['max', 'mean', 'aval', 'carrinho', 'len']:
     if key not in st.session_state:
         st.session_state[key] = [0] if key != 'carrinho' else []
 if 'banco_dados' not in st.session_state:
     st.session_state.banco_dados = []
-
-
-# Função para adicionar item ao carrinho
-
 
 
 def adicionar_ao_carrinho(nome, preco, pr):
@@ -105,12 +92,12 @@ def adicionar_ao_carrinho(nome, preco, pr):
 def exibir_itens(dicionario, especiais=[], coluna=None):
     with coluna:
         for nome, preco in dicionario.items():
-            caminho_imagem = os.path.join('images', f'{nome}.jpg')
+            caminho_pasta = os.path.join(os.path.dirname(__file__), 'images')
+            caminho_imagem = os.path.join(caminho_pasta, f'{item[0]}.jpg')
             if os.path.exists(caminho_imagem):
                 st.image(caminho_imagem)
             else:
                 st.warning(f"Imagem não encontrada: {caminho_imagem}")
-
             if nome in especiais:
                 pr = st.slider(f'Para adicionar **{nome}** arraste para 1', 0, 1, 0)
             else:
@@ -331,6 +318,7 @@ with tabo:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(2)
     placeholder.empty()
+
 
 
 

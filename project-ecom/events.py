@@ -118,41 +118,40 @@ def exibir_itens(dicionario, especiais=[], coluna=None):
 
 
 taba, tabe, tabi, tabo = st.tabs(['👥Cliente', '📈Financeiro', '🗄️Banco de Dados', '⚙️Sobre'])
-try:
-    with taba:
-        col_a, col_e, col_i = st.columns(3)
-        exibir_itens(dados['Mobiliário'], especiais=['Jardim', 'Piscina', 'Decorativos'], coluna=col_a)
-        exibir_itens(dados['alimentação'], especiais=['Bolo'], coluna=col_e)
-        exibir_itens(dados['entretenimento'], especiais=['Som', 'DJ', 'Artista ou Banda', 'Fogo de Artifício', 'After Party'], coluna=col_i)
 
-        with st.sidebar:
-            st.title('Carrinho')
-            new_data = pd.DataFrame(st.session_state.carrinho)
-            select = st.selectbox('Selecione o número da linha ou index', options=new_data.index)
-            if st.button('Eliminar Item'):
-                st.session_state.carrinho.pop(select)
-                st.session_state.dados.pop(select)
-                st.rerun()
-            st.dataframe(new_data)
-            st.metric("O Pagamento total", f"{new_data['Valor'].sum():.2f} Mts")
+with taba:
+    col_a, col_e, col_i = st.columns(3)
+    exibir_itens(dados['Mobiliário'], especiais=['Jardim', 'Piscina', 'Decorativos'], coluna=col_a)
+    exibir_itens(dados['alimentação'], especiais=['Bolo'], coluna=col_e)
+    exibir_itens(dados['entretenimento'], especiais=['Som', 'DJ', 'Artista ou Banda', 'Fogo de Artifício', 'After Party'], coluna=col_i)
 
-            if st.button("✅ Confirmar e Guardar no Banco de Dados"):
-                # Acumula no banco de dados
-                st.session_state.banco_dados.extend(st.session_state.carrinho)
-                st.success("Itens guardados no banco de dados!")
+    with st.sidebar:
+        st.title('Carrinho')
+        new_data = pd.DataFrame(st.session_state.carrinho)
+        select = st.selectbox('Selecione o número da linha ou index', options=new_data.index)
+        if st.button('Eliminar Item'):
+            st.session_state.carrinho.pop(select)
+            st.session_state.dados.pop(select)
+            st.rerun()
+        st.dataframe(new_data)
+        st.metric("O Pagamento total", f"{new_data['Valor'].sum():.2f} Mts")
 
-                data_base = pd.DataFrame(st.session_state.banco_dados)
+        if st.button("✅ Confirmar e Guardar no Banco de Dados"):
+            # Acumula no banco de dados
+            st.session_state.banco_dados.extend(st.session_state.carrinho)
+            st.success("Itens guardados no banco de dados!")
 
-                st.session_state.aval.append(data_base['Valor'].sum())
-                st.session_state.mean.append(data_base['Valor'].mean())
-                st.session_state.max.append(data_base['Valor'].max())
-                st.session_state.len.append(len(data_base))
+            data_base = pd.DataFrame(st.session_state.banco_dados)
 
-            else:
-                st.info("Carrinho vazio")
+            st.session_state.aval.append(data_base['Valor'].sum())
+            st.session_state.mean.append(data_base['Valor'].mean())
+            st.session_state.max.append(data_base['Valor'].max())
+            st.session_state.len.append(len(data_base))
 
-except:
-    st.empty()
+        else:
+            st.info("Carrinho vazio")
+
+
 data_base = pd.DataFrame(st.session_state.banco_dados)
 
 try:
@@ -316,6 +315,7 @@ with tabo:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(2)
     placeholder.empty()
+
 
 
 

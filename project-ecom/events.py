@@ -316,8 +316,9 @@ except:
 with tabo:
     placeholder = st.empty()
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
-    sleep(2)
+    sleep(5)
     placeholder.empty()
+
 
 
 

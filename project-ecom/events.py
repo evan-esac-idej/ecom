@@ -151,8 +151,8 @@ try:
     
             else:
                 st.info("Carrinho vazio")
-    except:
-        st.empty()
+except:
+    st.empty()
 
 
 data_base = pd.DataFrame(st.session_state.banco_dados)
@@ -318,6 +318,7 @@ with tabo:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(2)
     placeholder.empty()
+
 
 
 

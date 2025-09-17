@@ -150,7 +150,7 @@ try:
                 st.session_state.len.append(len(data_base))
     
             else:
-                st.info("Carrinho vazio")
+                st.empty()
 except:
     st.empty()
 
@@ -318,6 +318,7 @@ with tabo:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(5)
     placeholder.empty()
+
 
 
 

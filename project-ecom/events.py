@@ -134,7 +134,7 @@ try:
                 st.session_state.carrinho.pop(select)
                 st.session_state.dados.pop(select)
                 st.rerun()
-            st.dataframe(new_data)
+            st.dataframe(new_data, hide_index=True)
             st.metric("O Pagamento total", f"{new_data['Valor'].sum():.2f} Mts")
     
             if st.button("✅ Confirmar e Guardar no Banco de Dados"):
@@ -270,7 +270,7 @@ try:
         df_grouped = pd.DataFrame(grouped)
         df_ = df_grouped.rename(columns={'Valor': 'Valor total'})
         with st.expander(''):
-            st.dataframe(df_)
+            st.dataframe(df_, hide_index=True)
 
         st.markdown('---')
 
@@ -295,7 +295,7 @@ try:
         with col3:
             total = df_filt['Valor'].max()
             st.metric("Máximo de venda em Dia", f"{total:,.2f} Mts", f"{growth:,.2f}%")
-        st.dataframe(df_filt)
+        st.dataframe(df_filt, hide_index=True)
 except:
     st.warning('Adicione produtos a carrinha e no banco de dados para ter as analises dessa secção...')
     st.empty()
@@ -303,7 +303,7 @@ except:
 try:
     with tabi:
         data_base = pd.DataFrame(st.session_state.banco_dados)
-        st.dataframe(data_base)
+        st.dataframe(data_base, hide_index=True)
         button = st.button('Exportar dados em Excel')
         if button:
             placeholder = st.empty()
@@ -318,6 +318,7 @@ with tabo:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(5)
     placeholder.empty()
+
 
 
 

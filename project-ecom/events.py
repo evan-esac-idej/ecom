@@ -91,7 +91,7 @@ def adicionar_ao_carrinho(nome, preco, pr):
 # Função para exibir itens (mob, alim, entr)
 def exibir_itens(dicionario, especiais=[], coluna=None):
     with coluna:
-        for item in mob.items():
+        for nome, preco in dicionario.items():
             caminho_imagem = os.path.join(caminho_pasta, f"{item[0]}.jpg")
             if os.path.exists(caminho_imagem):
                 st.image(caminho_imagem)
@@ -315,6 +315,7 @@ with tabo:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(2)
     placeholder.empty()
+
 
 
 

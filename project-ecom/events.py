@@ -93,7 +93,7 @@ def exibir_itens(dicionario, especiais=[], coluna=None):
     with coluna:
         for nome, preco in dicionario.items():
             caminho_pasta = os.path.join(os.path.dirname(__file__), 'images')
-            caminho_imagem = os.path.join(caminho_pasta, f"{item[0]}.jpg")
+            caminho_imagem = os.path.join(caminho_pasta, f"{nome}.jpg")
             if os.path.exists(caminho_imagem):
                 st.image(caminho_imagem)
             else:
@@ -316,6 +316,7 @@ with tabo:
     placeholder.info('Desenvolvido por Ginélio Hermilio 🤠')
     sleep(2)
     placeholder.empty()
+
 
 
 

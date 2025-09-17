@@ -91,9 +91,8 @@ def adicionar_ao_carrinho(nome, preco, pr):
 # Função para exibir itens (mob, alim, entr)
 def exibir_itens(dicionario, especiais=[], coluna=None):
     with coluna:
-        for nome, preco in dicionario.items():
-            caminho_pasta = os.path.join(os.path.dirname(__file__), 'images')
-            caminho_imagem = os.path.join(caminho_pasta, f'{item[0]}.jpg')
+        for item in mob.items():
+            caminho_imagem = os.path.join(caminho_pasta, f"{item[0]}.jpg")
             if os.path.exists(caminho_imagem):
                 st.image(caminho_imagem)
             else:
@@ -118,7 +117,6 @@ def exibir_itens(dicionario, especiais=[], coluna=None):
                 st.write(f':green[Preço: **{preco}** Mts/unit]')
 
 
-# Exemplo de uso no bloco de clientes
 taba, tabe, tabi, tabo = st.tabs(['👥Cliente', '📈Financeiro', '🗄️Banco de Dados', '⚙️Sobre'])
 try:
     with taba:
